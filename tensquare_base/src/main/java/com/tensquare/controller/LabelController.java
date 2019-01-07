@@ -1,6 +1,7 @@
 package com.tensquare.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tensquare.pojo.Label;
 import com.tensquare.service.LabelService;
 
+import entity.PageResult;
 import entity.Result;
 
 @RestController
@@ -55,5 +57,11 @@ public class LabelController {
 	@PostMapping("search")
 	public Result search(@RequestBody Label label) {
 		return Result.success(labelService.findSearch(label));
+	}
+	
+	@PostMapping("search/{page}/{size}")
+	public Result searchPage(@RequestBody Label label,@PathVariable int page,@PathVariable int size) {
+		Page<Label> searchPage = labelService.searchPage(label,page,size);
+		return Result.success(new PageResult<Label>(searchPage.getTotalElements(),searchPage.getContent()));
 	}
 }

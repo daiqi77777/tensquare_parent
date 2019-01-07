@@ -1,5 +1,9 @@
+.gitignore
+*.iml
 /target/
-/.settings/
-/.project
-.classpath
 /bin/
+/.settings/
+.classpath
+.project
+.idea/**
+README.md

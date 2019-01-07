@@ -8,6 +8,6 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
-jpa:
-   database: MYSQL
-   show-sql: true
+  jpa: 
+    database: MySQL 
+    show-sql: true  #显示sql语句 
