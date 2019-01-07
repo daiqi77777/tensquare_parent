@@ -1,0 +1,13 @@
+server:
+  port: 9001
+spring:
+  application:
+  name: tensquare-base #指定服务名
+  datasource:
+    url: jdbc:mysql://192.168.239.128:3306/tensquare_base?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+jpa:
+   database: MYSQL
+   show-sql: true
