@@ -22,7 +22,7 @@ import entity.Result;
  */
 @RestController
 @CrossOrigin
-@RequestMapping("/enterprise")
+@RequestMapping("enterprise")
 public class EnterpriseController {
 
 	@Autowired

@@ -23,7 +23,7 @@ import entity.Result;
  */
 @RestController
 @CrossOrigin
-@RequestMapping("/recruit")
+@RequestMapping("recruit")
 public class RecruitController {
 
 	@Autowired
