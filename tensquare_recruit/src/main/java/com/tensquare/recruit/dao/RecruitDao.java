@@ -1,5 +1,7 @@
 package com.tensquare.recruit.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -11,4 +13,7 @@ import com.tensquare.recruit.pojo.Recruit;
  */
 public interface RecruitDao extends JpaRepository<Recruit,String>,JpaSpecificationExecutor<Recruit>{
 	
+	List<Recruit> findTop6ByStateOrderByCreatetimeDesc(String state);
+	
+	List<Recruit> findTop6ByStateNotOrderByCreatetimeDesc(String state);
 }

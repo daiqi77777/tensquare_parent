@@ -34,6 +34,11 @@ public class EnterpriseService {
 	
 	@Autowired
 	private IdWorker idWorker;
+	
+	public List<Enterprise> hotList(){
+		//1代表热门
+		return enterpriseDao.findByishot("1");
+	}
 
 	/**
 	 * 查询全部列表

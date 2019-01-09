@@ -28,6 +28,10 @@ public class EnterpriseController {
 	@Autowired
 	private EnterpriseService enterpriseService;
 
+	@RequestMapping("search/hotlist")
+	public Result hotList() {
+		return Result.success(enterpriseService.hotList());
+	}
 
 	/**
 	 * 查询全部数据

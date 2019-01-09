@@ -4,6 +4,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,6 @@ import com.tensquare.recruit.service.RecruitService;
 
 import entity.PageResult;
 import entity.Result;
-import entity.StatusCode;
 /**
  * 控制器层
  * @author Administrator
@@ -29,6 +29,16 @@ public class RecruitController {
 	@Autowired
 	private RecruitService recruitService;
 	
+	@GetMapping("search/newlist")
+	public Result newList() {
+		return Result.success(recruitService.newList());
+	}
+	
+	@GetMapping("search/recommend")
+	public Result recommend() {
+		return Result.success(recruitService.recommend());
+	}
+	
 	
 	/**
 	 * 查询全部数据
@@ -36,7 +46,7 @@ public class RecruitController {
 	 */
 	@RequestMapping(method= RequestMethod.GET)
 	public Result findAll(){
-		return new Result(true,StatusCode.OK,"查询成功",recruitService.findAll());
+		return Result.success(recruitService.findAll());
 	}
 	
 	/**
