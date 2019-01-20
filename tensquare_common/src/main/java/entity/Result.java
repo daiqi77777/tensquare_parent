@@ -49,4 +49,13 @@ public class Result {
 	public static Result error() {
 		return new Result(false,StatusCode.ERROR,"抱歉,服务器异常",null);
 	}
+
+	/**
+	 * 返回失败
+	 *
+	 * @return ResponseWrapper
+	 */
+	public static Result error(int code,String message) {
+		return new Result(false, code, message, null);
+	}
 }
