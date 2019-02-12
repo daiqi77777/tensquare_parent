@@ -38,9 +38,8 @@ public class ArticleService {
 	@Autowired
 	private IdWorker idWorker;
 	
-	@SuppressWarnings("rawtypes")
 	@Autowired
-	private RedisTemplate redisTemplate;
+	private RedisTemplate<Object,Object> redisTemplate;
 	
 	public void updateState(String id) {
 		articleDao.updateState(id);
@@ -86,7 +85,6 @@ public class ArticleService {
 	 * @param id
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public Article findById(String id) {
 		Article article = (Article) redisTemplate.opsForValue().get("article_"+id);
 		if(article == null) {
@@ -110,6 +108,7 @@ public class ArticleService {
 	 * @param article
 	 */
 	public void update(Article article) {
+		redisTemplate.delete("article_"+article.getId());
 		articleDao.save(article);
 	}
 
@@ -118,6 +117,7 @@ public class ArticleService {
 	 * @param id
 	 */
 	public void deleteById(String id) {
+		redisTemplate.delete("article_"+id);
 		articleDao.deleteById(id);
 	}
 
