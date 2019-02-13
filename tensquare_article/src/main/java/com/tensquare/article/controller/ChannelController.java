@@ -64,7 +64,7 @@ public class ChannelController {
 	public Result findSearch(@RequestBody Map<String, Object> searchMap, @PathVariable int page,
 			@PathVariable int size) {
 		Page<Channel> pageList = channelService.findSearch(searchMap, page, size);
-		return Result.success(new PageResult<Channel>(pageList.getTotalElements(), pageList.getContent()));
+		return Result.success(new PageResult<>(pageList.getTotalElements(), pageList.getContent()));
 	}
 
 	/**
