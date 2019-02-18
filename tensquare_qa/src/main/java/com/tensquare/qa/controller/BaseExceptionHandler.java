@@ -1,10 +1,9 @@
 package com.tensquare.qa.controller;
 
+import entity.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import entity.Result;
 
 /**
  * 统一异常处理类

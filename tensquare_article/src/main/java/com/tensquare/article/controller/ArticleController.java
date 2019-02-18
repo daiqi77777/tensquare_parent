@@ -1,6 +1,10 @@
 package com.tensquare.article.controller;
-import java.util.Map;
 
+import com.tensquare.article.pojo.Article;
+import com.tensquare.article.service.ArticleService;
+import entity.PageResult;
+import entity.Result;
+import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,12 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tensquare.article.pojo.Article;
-import com.tensquare.article.service.ArticleService;
-
-import entity.PageResult;
-import entity.Result;
-import entity.StatusCode;
+import java.util.Map;
 /**
  * 控制器层
  * @author Administrator

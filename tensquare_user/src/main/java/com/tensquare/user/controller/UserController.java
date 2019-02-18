@@ -1,21 +1,21 @@
 package com.tensquare.user.controller;
-import java.util.Map;
 
+import com.tensquare.user.pojo.User;
+import com.tensquare.user.service.UserService;
+import entity.PageResult;
+import entity.Result;
+import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tensquare.user.pojo.User;
-import com.tensquare.user.service.UserService;
-
-import entity.PageResult;
-import entity.Result;
-import entity.StatusCode;
+import java.util.Map;
 /**
  * 控制器层
  * @author Administrator
@@ -28,6 +28,12 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@PostMapping("/sendsms/{phone}")
+	public Result sendSms(@PathVariable String phone){
+		userService.sendSms(phone);
+		return Result.success();
+	}
 	
 	
 	/**
