@@ -9,5 +9,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  *
  */
 public interface AdminDao extends JpaRepository<Admin,String>,JpaSpecificationExecutor<Admin>{
-	
+
+    Admin findByLoginname(String loginName);
+
 }

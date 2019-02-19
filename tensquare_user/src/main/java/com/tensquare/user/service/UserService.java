@@ -1,6 +1,7 @@
 package com.tensquare.user.service;
 
 import com.tensquare.user.dao.UserDao;
+import com.tensquare.user.pojo.Admin;
 import com.tensquare.user.pojo.User;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import util.IdWorker;
 
@@ -38,6 +40,9 @@ public class UserService {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     /**
      * 查询全部列表
@@ -91,7 +96,8 @@ public class UserService {
      * @param user
      */
     public void add(User user) {
-        user.setId( idWorker.nextId()+"" );
+        user.setId( idWorker.nextId()+"");
+        user.setPassword(encoder.encode(user.getPassword()));//密码加密
         user.setFollowcount(0);//关注数
         user.setFanscount(0);//粉丝数
         user.setOnline(0L);//在线时长
@@ -185,9 +191,17 @@ public class UserService {
         map.put("phone",phone);
         map.put("code",random);
         // 发送给用户(输出到控制台)
-        rabbitTemplate.convertAndSend("sms",map);
+//        rabbitTemplate.convertAndSend("sms",map);
         System.out.println("***************************************************");
         System.out.println("给手机号:"+phone+",发送的验证码为:"+random);
         System.out.println("***************************************************");
+    }
+
+    public User login(User user) {
+        User info = userDao.findByMobile(user.getMobile());
+        if(info != null && encoder.matches(user.getPassword(),info.getPassword())){
+            return info;
+        }
+        return null;
     }
 }

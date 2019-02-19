@@ -49,7 +49,15 @@ public class UserController {
 		}
 
 	}
-	
+
+	@PostMapping("login")
+	public Result login(@RequestBody User user) {
+		user = userService.login(user);
+		if(user == null){
+			return Result.error(StatusCode.LOGINERROR,"登录失败");
+		}
+		return Result.success();
+	}
 	
 	/**
 	 * 查询全部数据
