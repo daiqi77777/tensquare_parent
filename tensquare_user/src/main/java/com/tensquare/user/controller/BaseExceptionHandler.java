@@ -1,6 +1,7 @@
 package com.tensquare.user.controller;
 
 import entity.Result;
+import entity.StatusCode;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,6 @@ public class BaseExceptionHandler {
     @ResponseBody
     public Result error(Exception e) {
         e.printStackTrace();
-        return Result.error();
+        return Result.error(StatusCode.ERROR,e.getMessage());
     }
 }

@@ -16,10 +16,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -94,7 +91,13 @@ public class UserService {
      * @param user
      */
     public void add(User user) {
-        user.setId(idWorker.nextId() + "");
+        user.setId( idWorker.nextId()+"" );
+        user.setFollowcount(0);//关注数
+        user.setFanscount(0);//粉丝数
+        user.setOnline(0L);//在线时长
+        user.setRegdate(new Date());//注册日期
+        user.setUpdatedate(new Date());//更新日期
+        user.setLastdate(new Date());//最后登陆日期
         userDao.save(user);
     }
 
@@ -184,7 +187,7 @@ public class UserService {
         // 发送给用户(输出到控制台)
         rabbitTemplate.convertAndSend("sms",map);
         System.out.println("***************************************************");
-        System.out.println("给手机号:+"+phone+",发送的验证码为:"+random);
+        System.out.println("给手机号:"+phone+",发送的验证码为:"+random);
         System.out.println("***************************************************");
     }
 }

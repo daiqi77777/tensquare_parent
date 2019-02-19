@@ -5,15 +5,11 @@ import com.tensquare.user.service.UserService;
 import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 /**
@@ -29,10 +25,29 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private RedisTemplate redisTemplate;
+
+	/**
+	 * 发送短信验证码
+	 * @return
+	 */
 	@PostMapping("/sendsms/{phone}")
 	public Result sendSms(@PathVariable String phone){
 		userService.sendSms(phone);
 		return Result.success();
+	}
+
+	@PostMapping("register/{code}")
+	public Result regist(@PathVariable String code,@RequestBody User user){
+		String random = redisTemplate.opsForValue().get("random" + user.getMobile()).toString();
+		if(!StringUtils.isEmpty(random) && random.equals(code)){
+			userService.add(user);
+			return Result.success();
+		}else {
+			return Result.error(StatusCode.ERROR,"验证码不正确或已失效");
+		}
+
 	}
 	
 	
