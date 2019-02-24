@@ -1,9 +1,10 @@
 package com.tensquare.user.service;
 
 import com.tensquare.user.dao.UserDao;
-import com.tensquare.user.pojo.Admin;
 import com.tensquare.user.pojo.User;
+import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,12 +14,18 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import util.IdWorker;
+import util.JwtUtil;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,6 +50,12 @@ public class UserService {
 
     @Autowired
     private BCryptPasswordEncoder encoder;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * 查询全部列表
@@ -122,6 +135,18 @@ public class UserService {
      * @param id
      */
     public void deleteById(String id) {
+        String authHeader = request.getHeader("Authorization");
+        if(StringUtils.isEmpty(authHeader) || !authHeader.startsWith("Bearer")){
+            throw new RuntimeException("权限不足");
+        }
+        String token=authHeader.substring(7);//提取token
+        Claims claims = jwtUtil.parseJWT(token);
+        if(claims==null){
+            throw new RuntimeException("权限不足");
+        }
+        if(!"admin".equals(claims.get("roles"))) {
+            throw new RuntimeException("权限不足");
+        }
         userDao.deleteById(id);
     }
 

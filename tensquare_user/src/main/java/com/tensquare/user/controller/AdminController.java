@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import util.JwtUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,13 +32,20 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @PostMapping("login")
     public Result login(@RequestBody Admin admin){
         admin = adminService.login(admin);
         if(admin == null){
             return Result.error(StatusCode.LOGINERROR,"登录失败");
         }
-        return Result.success();
+        String token = jwtUtil.createJWT(admin.getId(), admin.getLoginname(), "admin");
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("token", token);
+        map.put("role", "admin");
+        return Result.success(map);
     }
 
 
