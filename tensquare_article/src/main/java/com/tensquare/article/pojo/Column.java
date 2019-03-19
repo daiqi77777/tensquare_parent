@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Date;
+
 /**
  * 实体类
  * @author Administrator
@@ -29,9 +31,9 @@ public class Column implements Serializable{
 
 	private String userid;//用户ID
 
-	private java.util.Date createtime;//申请日期
+	private Date createtime;//申请日期
 
-	private java.util.Date checktime;//审核日期
+	private Date checktime;//审核日期
 
 	private String state;//状态
 }

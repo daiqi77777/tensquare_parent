@@ -136,7 +136,7 @@ public class UserService {
      */
     public void deleteById(String id) {
         String authHeader = request.getHeader("Authorization");
-        if(StringUtils.isEmpty(authHeader) || !authHeader.startsWith("Bearer")){
+        if(StringUtils.isEmpty(authHeader) || !authHeader.startsWith("Bearer ")){
             throw new RuntimeException("权限不足");
         }
         String token=authHeader.substring(7);//提取token

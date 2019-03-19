@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Date;
+
 /**
  * 实体类
  * @author Administrator
@@ -24,7 +26,7 @@ public class Article implements Serializable{
 	private String id;//ID
 	
 	private String columnid;//专栏ID
-	
+
 	private String userid;//用户ID
 	
 	private String title;//标题
@@ -32,10 +34,10 @@ public class Article implements Serializable{
 	private String content;//文章正文
 	
 	private String image;//文章封面
+
+	private Date createtime;//发表日期
 	
-	private java.util.Date createtime;//发表日期
-	
-	private java.util.Date updatetime;//修改日期
+	private Date updatetime;//修改日期
 	
 	private String ispublic;//是否公开
 	
