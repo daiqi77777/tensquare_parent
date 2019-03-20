@@ -1,5 +1,6 @@
 package com.tensquare.qa.controller;
 
+import com.tensquare.qa.client.BaseClient;
 import com.tensquare.qa.pojo.Problem;
 import com.tensquare.qa.service.ProblemService;
 import entity.PageResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -29,23 +31,31 @@ public class ProblemController {
 
 	@Autowired
 	private ProblemService problemService;
+
+	@Autowired
+	private BaseClient baseClient;
+
+	@GetMapping("label/{labelId}")
+	public Result test(@PathVariable String labelId) {
+		return baseClient.findById(labelId);
+	}
 	
 	@GetMapping("newlist/{labelId}/{page}/{size}")
 	public Result newList(@PathVariable String labelId,@PathVariable int page,@PathVariable int size) {
 		Page<Problem> pageList = problemService.newList(labelId,page,size);
-		return Result.success(new PageResult<Problem>(pageList.getTotalElements(), pageList.getContent()));
+		return Result.success(new PageResult<>(pageList.getTotalElements(), pageList.getContent()));
 	}
 	
 	@GetMapping("hotlist/{labelId}/{page}/{size}")
 	public Result hotList(@PathVariable String labelId,@PathVariable int page,@PathVariable int size) {
 		Page<Problem> pageList = problemService.hotList(labelId,page,size);
-		return Result.success(new PageResult<Problem>(pageList.getTotalElements(), pageList.getContent()));
+		return Result.success(new PageResult<>(pageList.getTotalElements(), pageList.getContent()));
 	}
 	
 	@GetMapping("waitlist/{labelId}/{page}/{size}")
 	public Result waitList(@PathVariable String labelId,@PathVariable int page,@PathVariable int size) {
 		Page<Problem> pageList = problemService.waitList(labelId,page,size);
-		return Result.success(new PageResult<Problem>(pageList.getTotalElements(), pageList.getContent()));
+		return Result.success(new PageResult<>(pageList.getTotalElements(), pageList.getContent()));
 	}
 
 	/**
@@ -81,7 +91,7 @@ public class ProblemController {
 	public Result findSearch(@RequestBody Map<String, Object> searchMap, @PathVariable int page,
 			@PathVariable int size) {
 		Page<Problem> pageList = problemService.findSearch(searchMap, page, size);
-		return Result.success(new PageResult<Problem>(pageList.getTotalElements(), pageList.getContent()));
+		return Result.success(new PageResult<>(pageList.getTotalElements(), pageList.getContent()));
 	}
 
 	/**

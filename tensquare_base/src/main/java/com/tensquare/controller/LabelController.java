@@ -31,7 +31,8 @@ public class LabelController {
 
 	@GetMapping("{labelId}")
 	public Result findById(@PathVariable String labelId) {
-		return Result.success(labelService.findById(labelId));
+		labelService.findById(labelId);
+		return Result.success();
 	}
 
 	@PostMapping("")
@@ -40,7 +41,7 @@ public class LabelController {
 		return Result.success();
 	}
 
-	@PutMapping("{labelId}")
+	@PutMapping()
 	public Result update(@RequestBody Label label) {
 		labelService.update(label);
 		return Result.success();
@@ -60,6 +61,6 @@ public class LabelController {
 	@PostMapping("search/{page}/{size}")
 	public Result searchPage(@RequestBody Label label,@PathVariable int page,@PathVariable int size) {
 		Page<Label> searchPage = labelService.searchPage(label,page,size);
-		return Result.success(new PageResult<Label>(searchPage.getTotalElements(),searchPage.getContent()));
+		return Result.success(new PageResult<>(searchPage.getTotalElements(),searchPage.getContent()));
 	}
 }
