@@ -35,7 +35,7 @@ public class IdWorker {
 	private final static long workerIdBits = 5L;
 	// 数据中心标识位数
 	private final static long datacenterIdBits = 5L;
-	// 机器ID最大值
+	// 机器ID最大值sad
 	private final static long maxWorkerId = -1L ^ (-1L << workerIdBits);
 	// 数据中心ID最大值
 	private final static long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
